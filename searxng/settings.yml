@@ -1,0 +1,56 @@
+# SearXNG configuration for Firecrawl
+use_default_settings: true
+
+server:
+  port: 8080
+  bind_address: "0.0.0.0"
+  secret_key: "change_this_secret_key_in_production"
+  base_url: false
+  image_proxy: false
+
+ui:
+  static_use_hash: false
+
+search:
+  safe_search: 0
+  autocomplete: ""
+  default_lang: "en"
+  formats:
+    - html
+    - json
+
+engines:
+  - name: google
+    engine: google
+    shortcut: g
+    use_mobile_ui: false
+
+  - name: bing
+    engine: bing
+    shortcut: bi
+
+  - name: duckduckgo
+    engine: duckduckgo
+    shortcut: ddg
+
+  - name: startpage
+    engine: startpage
+    shortcut: sp
+
+  - name: yahoo
+    engine: yahoo
+    shortcut: yh
+
+enabled_plugins:
+  - 'Hash plugin'
+  - 'Search on category select'
+  - 'Self Information'
+  - 'Tracker URL remover'
+
+disabled_engines:
+  - 'bing images'
+  - 'bing news'
+  - 'bing videos'
+  - 'google images'
+  - 'google news'
+  - 'google videos'

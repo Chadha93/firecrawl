@@ -41,9 +41,9 @@ x-common-env: &common-env
   PROXY_SERVER: ${PROXY_SERVER}
   PROXY_USERNAME: ${PROXY_USERNAME}
   PROXY_PASSWORD: ${PROXY_PASSWORD}
-  SEARXNG_ENDPOINT: ${SEARXNG_ENDPOINT}
-  SEARXNG_ENGINES: ${SEARXNG_ENGINES}
-  SEARXNG_CATEGORIES: ${SEARXNG_CATEGORIES}
+  SEARXNG_ENDPOINT: ${SEARXNG_ENDPOINT:-http://searxng:8080}
+  SEARXNG_ENGINES: ${SEARXNG_ENGINES:-google,bing,duckduckgo}
+  SEARXNG_CATEGORIES: ${SEARXNG_CATEGORIES:-general}
 
 services:
   playwright-service:
@@ -71,6 +71,7 @@ services:
     depends_on:
       - redis
       - playwright-service
+      - searxng
     ports:
       - "${PORT:-3002}:${INTERNAL_PORT:-3002}"
     command: node dist/src/harness.js --start-docker
@@ -96,6 +97,29 @@ services:
       - backend
     ports:
       - "5432:5432"
+
+  searxng:
+    image: searxng/searxng:latest
+    container_name: searxng
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./searxng:/etc/searxng:rw
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:8080/
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+    networks:
+      - backend
 
 networks:
   backend:
