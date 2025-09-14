@@ -2,7 +2,7 @@
 use_default_settings: true
 
 server:
-  secret_key: "change_this_secret_key_in_production"
+  secret_key: "${SEARXNG_SECRET_KEY:-change_this_secret_key_in_production}"
 
 search:
   safe_search: 0
@@ -15,10 +15,6 @@ engines:
   - name: google
     engine: google
     shortcut: g
-
-  - name: bing
-    engine: bing
-    shortcut: bi
 
   - name: duckduckgo
     engine: duckduckgo
