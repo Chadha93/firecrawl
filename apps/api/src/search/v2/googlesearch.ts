@@ -8,19 +8,11 @@ const getRandomInt = (min: number, max: number): number =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
 function get_useragent(): string {
+  const lynx_version = `Lynx/${getRandomInt(2, 3)}.${getRandomInt(8, 9)}.${getRandomInt(0, 2)}`;
   const libwww_version = `libwww-FM/${getRandomInt(2, 3)}.${getRandomInt(13, 15)}`;
   const ssl_mm_version = `SSL-MM/${getRandomInt(1, 2)}.${getRandomInt(3, 5)}`;
   const openssl_version = `OpenSSL/${getRandomInt(1, 3)}.${getRandomInt(0, 4)}.${getRandomInt(0, 9)}`;
-
-  const modernAgents = [
-    `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${getRandomInt(138, 142)}.0.0.0 Safari/537.36 ${ssl_mm_version}`,
-    `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${getRandomInt(138, 142)}.0.0.0 Safari/537.36 ${openssl_version}`,
-    `Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:${getRandomInt(110, 120)}.0) Gecko/20100101 Firefox/${getRandomInt(110, 120)}.0 ${libwww_version}`,
-    `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/${getRandomInt(16, 17)}.${getRandomInt(0, 6)} Safari/605.1.15 ${ssl_mm_version}`,
-    `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${getRandomInt(138, 142)}.0.0.0 Safari/537.36 Edg/${getRandomInt(138, 142)}.0.0.0 ${openssl_version}`,
-  ];
-
-  return modernAgents[Math.floor(Math.random() * modernAgents.length)];
+  return `${lynx_version} ${libwww_version} ${ssl_mm_version} ${openssl_version}`;
 }
 
 async function _req(
@@ -53,13 +45,7 @@ async function _req(
     const resp = await axios.get("https://www.google.com/search", {
       headers: {
         "User-Agent": agent,
-        Accept:
-          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.5",
-        "Accept-Encoding": "gzip, deflate",
-        DNT: "1",
-        Connection: "keep-alive",
-        "Upgrade-Insecure-Requests": "1",
+        Accept: "*/*",
       },
       params: params,
       proxy: proxies,
