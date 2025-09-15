@@ -35,7 +35,7 @@ class AsyncWatcher:
         self._job_id = job_id
         self._kind = kind
         self._timeout = timeout
-        self._poll_interval: float = float(poll_interval)
+        self._poll_interval: float = max(0.0, float(poll_interval))  # Guard against negative values
 
         http_client = getattr(client, "http_client", None)
         if http_client is not None:
