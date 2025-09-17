@@ -176,13 +176,14 @@ export async function fireEngineCheckStatus(
       const code = status.error.split("Chrome error: ")[1];
 
       if (
-        code.includes("ERR_CERT_") ||
-        code.includes("ERR_SSL_") ||
-        code.includes("ERR_BAD_SSL_")
+        code &&
+        (code.includes("ERR_CERT_") ||
+          code.includes("ERR_SSL_") ||
+          code.includes("ERR_BAD_SSL_"))
       ) {
         throw new SSLError(meta.options.skipTlsVerification);
       } else {
-        throw new SiteError(code);
+        throw new SiteError(code || status.error);
       }
     } else if (
       typeof status.error === "string" &&
