@@ -342,7 +342,7 @@ const engineOptions: {
       pdf: false,
       docx: false,
       atsv: false,
-      location: false,
+      location: true,
       mobile: false,
       skipTlsVerification: true,
       useFastMode: false,
