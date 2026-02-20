@@ -276,7 +276,7 @@ export async function browserCreateController(
       kind: "browser",
       api_version: "v2",
       team_id: req.auth.team_id,
-      target_hint: "Browser session",
+      target_hint: sessionId,
       origin: "api",
       zeroDataRetention: false,
       api_key_id: req.acuc!.api_key_id,
